@@ -11,6 +11,10 @@ const MovieCard = (props) => {
         <img
           src={`https://image.tmdb.org/t/p/w200/${props.movie.poster_path}`}
         />
+        <span className="rate">
+          <span className="star-icon">&#9733;</span> {props.movie.vote_average}
+          /10
+        </span>
       </div>
       <div className="info">
         <span className="title">{props.movie.original_title}</span>

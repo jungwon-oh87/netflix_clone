@@ -1,12 +1,45 @@
 .image-container {
+  width: 100%;
   height: 200px;
   overflow: hidden;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+}
+
+.rate {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  color: #fff;
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+}
+
+.image-container:hover .rate {
+  opacity: 1;
+}
+
+.star-icon {
+  color: #ffff00;
 }
 
 img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  -webkit-filter: brightness(100%);
+}
+
+img:hover {
+  -webkit-filter: brightness(50%);
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  transform: scale(1.1);
+  transition: all 1s ease;
 }
 
 .info {
