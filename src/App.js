@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 
 import MoviesPage from "./pages/movies/moviesPage";
-import { Nav } from "./components/nav/nav.component";
+import Nav from "./components/nav/nav.component";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
@@ -50,19 +50,20 @@ class App extends Component {
   };
 
   showTvPage() {
-    return <h1 Style="margin-top: 50px;">TV Page coming soon...</h1>;
+    return <h1 className="temp-text">TV Page coming soon...</h1>;
   }
 
   showSearchPage() {
-    return <h1 Style="margin-top: 50px;">Search Page coming soon...</h1>;
+    return <h1 className="temp-text">Search Page coming soon...</h1>;
   }
 
   showNotFound() {
-    return <h1 Style="margin-top: 50px;">404 Page</h1>;
+    console.log("not found called");
+    return <h1 className="temp-text">404 Page</h1>;
   }
 
   render() {
-    const { now_playing_movies, upcoming_movies, popular_movies } = this.state;
+    // const { now_playing_movies, upcoming_movies, popular_movies } = this.state;
     return (
       <div className="App">
         <Router>
@@ -81,7 +82,6 @@ class App extends Component {
             <Route component={this.showNotFound} />
           </Switch>
         </Router>
-        {/* <MoviesPage data={this.state} /> */}
       </div>
     );
   }

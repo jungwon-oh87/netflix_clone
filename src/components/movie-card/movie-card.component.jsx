@@ -4,7 +4,7 @@ import "./movie-card.style.css";
 
 const MovieCard = (props) => {
   const year = props.movie.release_date.split("-", 1);
-  console.log(year);
+  // console.log(year);
   return (
     <div>
       <div className="image-container">
