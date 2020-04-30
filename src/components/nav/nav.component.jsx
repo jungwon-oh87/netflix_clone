@@ -19,7 +19,7 @@ export const Nav = () => {
     <header className="list-container">
       <Link to="/netflix_clone/">Movies</Link>
       <Link to="/netflix_clone/tv">TV</Link>
-      <Link to="/netflix_clone/search">Search</Link>
+      <Link to="/netflix_clone/search">Search iT!!!</Link>
       {/* <ul className="ul">
         <li className="activated">
           <a href="#">Movies</a>
