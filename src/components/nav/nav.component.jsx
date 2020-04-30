@@ -1,5 +1,6 @@
 import React from "react";
 
+import { Link } from "react-router-dom";
 import "./nav.style.css";
 
 export const Nav = () => {
@@ -14,8 +15,12 @@ export const Nav = () => {
   }
 
   return (
-    <div className="list-container" onClick={handleClick}>
-      <ul className="ul">
+    // <header className="list-container" onClick={handleClick}>
+    <header className="list-container">
+      <Link to="/netflix_clone/">Movies</Link>
+      <Link to="/netflix_clone/tv">TV</Link>
+      <Link to="/netflix_clone/search">Search</Link>
+      {/* <ul className="ul">
         <li className="activated">
           <a href="#">Movies</a>
         </li>
@@ -25,7 +30,7 @@ export const Nav = () => {
         <li>
           <a href="#">Search</a>
         </li>
-      </ul>
-    </div>
+      </ul> */}
+    </header>
   );
 };

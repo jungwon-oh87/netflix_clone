@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import "./App.css";
 
+import MoviesPage from "./pages/movies/moviesPage";
 import { Nav } from "./components/nav/nav.component";
-import NowPlaying from "./components/now-playing/now.component";
-import UpcomingMovies from "./components/upcoming-movies/upcoming.component";
-import PopularMovies from "./components/popular-movies/poplular.component";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 class App extends Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
       now_playing_movies: [],
@@ -46,14 +45,43 @@ class App extends Component {
     });
   }
 
+  showMoviePage = () => {
+    return <MoviesPage data={this.state} />;
+  };
+
+  showTvPage() {
+    return <h1 Style="margin-top: 50px;">TV Page coming soon...</h1>;
+  }
+
+  showSearchPage() {
+    return <h1 Style="margin-top: 50px;">Search Page coming soon...</h1>;
+  }
+
+  showNotFound() {
+    return <h1 Style="margin-top: 50px;">404 Page</h1>;
+  }
+
   render() {
     const { now_playing_movies, upcoming_movies, popular_movies } = this.state;
     return (
       <div className="App">
-        <Nav></Nav>
-        <NowPlaying movies={now_playing_movies} />
-        <UpcomingMovies movies={upcoming_movies} />
-        <PopularMovies movies={popular_movies} />
+        <Router>
+          <Nav></Nav>
+          <Switch>
+            <Route
+              path="/netflix_clone/"
+              component={this.showMoviePage}
+              exact={true}
+            />
+            <Route path="/netflix_clone/tv" component={this.showTvPage} />
+            <Route
+              path="/netflix_clone/search"
+              component={this.showSearchPage}
+            />
+            <Route component={this.showNotFound} />
+          </Switch>
+        </Router>
+        {/* <MoviesPage data={this.state} /> */}
       </div>
     );
   }

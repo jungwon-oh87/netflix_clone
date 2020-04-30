@@ -42,8 +42,9 @@
 .ul li.activated {
   border-bottom: 5px solid red;
 }
-a {
+
+/* a {
   text-decoration: none;
   color: #fff;
   pointer-events: none;
-}
+} */
