@@ -1,6 +1,6 @@
 import React from "react";
-import NowPlaying from "../../components/upcoming-movies/upcoming.component";
-import UpcomingMovies from "../../components/now-playing/now.component";
+import NowPlaying from "../../components/now-playing/now.component";
+import UpcomingMovies from "../../components/upcoming-movies/upcoming.component";
 import PopularMovies from "../../components/popular-movies/poplular.component";
 
 const MoviesPage = (props) => {

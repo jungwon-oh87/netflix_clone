@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 
 import MoviesPage from "./pages/movies/moviesPage";
+import DetailPage from "./pages/detail/detail";
 import Nav from "./components/nav/nav.component";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -57,6 +58,10 @@ class App extends Component {
     return <h1 className="temp-text">Search Page coming soon...</h1>;
   }
 
+  // showDetail() {
+  //   return <DetailPage />;
+  // }
+
   showNotFound() {
     console.log("not found called");
     return <h1 className="temp-text">404 Page</h1>;
@@ -79,6 +84,7 @@ class App extends Component {
               path="/netflix_clone/search"
               component={this.showSearchPage}
             />
+            <Route path="/detail" component={DetailPage} />
             <Route component={this.showNotFound} />
           </Switch>
         </Router>
