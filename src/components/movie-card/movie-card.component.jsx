@@ -15,6 +15,7 @@ const MovieCard = (props) => {
           }}
         >
           <img
+            className="poster"
             src={`https://image.tmdb.org/t/p/w200/${props.movie.poster_path}`}
           />
           <span className="rate">
