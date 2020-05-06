@@ -32,7 +32,7 @@ class Detail extends React.Component {
           ).then((data) => data.json()),
           // For video teaser
           fetch(
-            `http://api.themoviedb.org/3/movie/${this.state.movie_id}/videos?api_key=${API_KEY}&language=en-US`
+            `https://api.themoviedb.org/3/movie/${this.state.movie_id}/videos?api_key=${API_KEY}&language=en-US`
           ).then((data) => data.json()),
         ]).then((allResponses) =>
           this.setState(
