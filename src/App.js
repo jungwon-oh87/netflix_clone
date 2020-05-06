@@ -30,19 +30,11 @@ class App extends Component {
         `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`
       ).then((data) => data.json()),
     ]).then((allResponses) => {
-      this.setState(
-        {
-          now_playing_movies: allResponses[0].results,
-          upcoming_movies: allResponses[1].results,
-          popular_movies: allResponses[2].results,
-        },
-        () => {
-          console.log(
-            "after fetched, only popular movies: ",
-            this.state.popular_movies
-          );
-        }
-      );
+      this.setState({
+        now_playing_movies: allResponses[0].results,
+        upcoming_movies: allResponses[1].results,
+        popular_movies: allResponses[2].results,
+      });
     });
   }
 
