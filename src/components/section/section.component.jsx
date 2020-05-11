@@ -8,7 +8,7 @@ const Section = (props) => {
     <div className="section-container">
       <h2>{props.title}</h2>
       <div className="section-content">
-        <List movies={props.data} category={props.category} />
+        <List data={props.data} category={props.category} />
       </div>
     </div>
   );

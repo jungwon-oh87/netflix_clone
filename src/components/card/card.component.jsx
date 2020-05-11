@@ -1,16 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./movie-card.style.css";
+import "./card.styles.css";
 
-const MovieCard = (props) => {
+const Card = (props) => {
   let year;
 
   if (props.category === "movie") {
-    year = props.movie.release_date.split("-", 1);
+    year = props.data.release_date.split("-", 1);
   }
 
   if (props.category === "tv") {
-    year = props.movie.first_air_date.split("-", 1);
+    year = props.data.first_air_date.split("-", 1);
   }
 
   return (
@@ -19,16 +19,15 @@ const MovieCard = (props) => {
         <Link
           to={{
             pathname: "/detail",
-            state: { movie: props.movie },
+            state: { data: props.data, category: props.category },
           }}
         >
           <img
             className="poster"
-            src={`https://image.tmdb.org/t/p/w200/${props.movie.poster_path}`}
+            src={`https://image.tmdb.org/t/p/w200/${props.data.poster_path}`}
           />
           <span className="rate">
-            <span className="star-icon">&#9733;</span>{" "}
-            {props.movie.vote_average}
+            <span className="star-icon">&#9733;</span> {props.data.vote_average}
             /10
           </span>
         </Link>
@@ -36,8 +35,8 @@ const MovieCard = (props) => {
       <div className="info">
         <span className="title">
           {props.category === "movie"
-            ? props.movie.original_title
-            : props.movie.original_name}
+            ? props.data.original_title
+            : props.data.original_name}
         </span>
         <span className="year">{year}</span>
       </div>
@@ -45,4 +44,4 @@ const MovieCard = (props) => {
   );
 };
 
-export default MovieCard;
+export default Card;

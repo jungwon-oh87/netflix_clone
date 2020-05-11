@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import Section from "../../components/section/section.component";
 
 const TvPage = (props) => {
-  console.log("Tv page component: ", props.data.top_rated_tv);
+  console.log("Airing TV in TV page component: ", props.data.air_tv);
   return (
     <Fragment>
       <Section

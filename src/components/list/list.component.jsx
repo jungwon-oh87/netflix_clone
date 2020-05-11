@@ -1,13 +1,13 @@
 import React from "react";
-import MovieCard from "../movie-card/movie-card.component";
+import Card from "../card/card.component";
 
 import "./list.styles.css";
 
 const List = (props) => {
   return (
     <div className="list-container">
-      {props.movies.map((m) => {
-        return <MovieCard key={m.id} movie={m} category={props.category} />;
+      {props.data.map((d) => {
+        return <Card key={d.id} data={d} category={props.category} />;
       })}
     </div>
   );
