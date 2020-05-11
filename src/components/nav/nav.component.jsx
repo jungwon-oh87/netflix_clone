@@ -14,10 +14,10 @@ const handleClick = (e) => {
 };
 const Nav = () => {
   return (
-    <header className="list-container" onClick={handleClick}>
-      <ul className="ul">
+    <header className="nav-list-container" onClick={handleClick}>
+      <ul className="nav-ul">
         <li>
-          <Link to="/netflix_clone/" className="activated">
+          <Link to="/netflix_clone/" className="nav-activated">
             Movies
           </Link>
         </li>

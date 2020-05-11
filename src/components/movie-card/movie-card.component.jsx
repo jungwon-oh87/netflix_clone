@@ -3,8 +3,16 @@ import { Link } from "react-router-dom";
 import "./movie-card.style.css";
 
 const MovieCard = (props) => {
-  const year = props.movie.release_date.split("-", 1);
-  // console.log("MovieCard: ", props.movie);
+  let year;
+
+  if (props.category === "movie") {
+    year = props.movie.release_date.split("-", 1);
+  }
+
+  if (props.category === "tv") {
+    year = props.movie.first_air_date.split("-", 1);
+  }
+
   return (
     <div>
       <div className="image-container">
@@ -26,7 +34,11 @@ const MovieCard = (props) => {
         </Link>
       </div>
       <div className="info">
-        <span className="title">{props.movie.original_title}</span>
+        <span className="title">
+          {props.category === "movie"
+            ? props.movie.original_title
+            : props.movie.original_name}
+        </span>
         <span className="year">{year}</span>
       </div>
     </div>
