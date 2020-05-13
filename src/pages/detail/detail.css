@@ -55,7 +55,7 @@
 .detail_button {
   border: none;
   font-weight: 600;
-  /* padding: 5px; */
+  margin-left: 3px;
   border-radius: 5px;
   background-color: rgb(232, 183, 8);
   outline: none;

@@ -9,160 +9,90 @@ class Detail extends React.Component {
   }
 
   state = {
-    movie_id: "",
-    movie_info: {},
-    movie_video_info: {},
-    movie_year: "",
-    movie_runtime_hr: -1,
-    movie_runtime_min: 0,
-    movie_genres: [],
-    movie_video_key: "",
-    tv_id: "",
-    tv_info: {},
-    tv_video_info: {},
-    tv_year: "",
-    tv_runtime_hr: -1,
-    tv_runtime_min: 0,
-    tv_genres: [],
-    tv_video_key: "",
+    id: "",
+    info: {},
+    video_info: {},
+    year: "",
+    runtime_hr: -1,
+    runtime_min: 0,
+    genres: [],
+    video_key: "",
+    title: "",
   };
 
-  handleMovie = () => {
+  componentDidMount() {
+    let category = this.props.location.state.category;
     console.log("movie data: ", this.props.location.state.data);
+    // console.log(this.props.location.state.category);
     this.setState(
       {
-        movie_id: this.props.location.state.data.id,
+        id: this.props.location.state.data.id,
       },
       () => {
         Promise.all([
           // For movie info
           fetch(
-            `https://api.themoviedb.org/3/movie/${this.state.movie_id}?api_key=${API_KEY}&language=en-US`
+            `https://api.themoviedb.org/3/${category}/${this.state.id}?api_key=${API_KEY}&language=en-US`
           ).then((data) => data.json()),
           // For video teaser
           fetch(
-            `https://api.themoviedb.org/3/movie/${this.state.movie_id}/videos?api_key=${API_KEY}&language=en-US`
+            `https://api.themoviedb.org/3/${category}/${this.state.id}/videos?api_key=${API_KEY}&language=en-US`
           ).then((data) => data.json()),
         ]).then((allResponses) =>
           this.setState(
             {
-              movie_info: allResponses[0],
-              movie_video_info: allResponses[1],
+              info: allResponses[0],
+              video_info: allResponses[1],
             },
             () => {
-              console.log("after fetched, movie_info: ", this.state.movie_info);
-              console.log(
-                "after fetched, video_info: ",
-                this.state.movie_video_info
-              );
+              console.log("after fetched, movie_info: ", this.state.info);
+              console.log("after fetched, video_info: ", this.state.video_info);
+
+              // Create title, year, runtime, genres
+              let title = "";
+              let year = "";
+              let total_runtime_min = -1;
+              let genres = [];
+              let video_key = "";
+
+              // Set info according to category
+              if (category === "movie") {
+                title = this.state.info.original_title;
+                year = this.state.info.release_date.split("-", 1);
+                total_runtime_min = this.state.info.runtime;
+              } else {
+                title = this.state.info.original_name;
+                year = this.state.info.first_air_date.split("-", 1);
+                total_runtime_min = this.state.info.episode_run_time[0];
+              }
+
+              // Set genres and video
+              genres = this.state.info.genres.map((g) => g.name);
+
+              if (this.state.video_info.results.length > 0) {
+                video_key = this.state.video_info.results[0].key;
+              } else {
+                video_key = "";
+              }
 
               // Handle runtime format
-              let runtime_min = -1;
-              runtime_min = this.state.movie_info.runtime;
-              let hour = Math.floor(runtime_min / 60);
-              let min = Math.floor(runtime_min % 60);
-
-              // Handle genres
-              let genres = [];
-
-              genres = this.state.movie_info.genres.map((g) => {
-                return g.name;
-              });
+              let hour = Math.floor(total_runtime_min / 60);
+              let min = Math.floor(total_runtime_min % 60);
 
               // Update state
               this.setState({
-                movie_year: this.state.movie_info.release_date.split("-", 1),
-                movie_runtime_hr: hour,
-                movie_runtime_min: min,
-                movie_genres: genres,
-                movie_video_key: this.state.movie_video_info.results[0].key,
+                year: year,
+                runtime_hr: hour,
+                runtime_min: min,
+                genres: genres,
+                video_key: video_key,
+                title: title,
               });
             }
           )
         );
       }
     );
-  };
-
-  handleTv = () => {
-    console.log(this.props.location.state.data);
-    this.setState(
-      {
-        tv_id: this.props.location.state.data.id,
-      },
-      () => {
-        console.log("tv id: ", this.state.tv_id);
-        Promise.all([
-          fetch(
-            `https://api.themoviedb.org/3/tv/${this.state.tv_id}?api_key=${API_KEY}&language=en-US`
-          ).then((data) => data.json()),
-          fetch(
-            `https://api.themoviedb.org/3/tv/${this.state.tv_id}/videos?api_key=${API_KEY}&language=en-US`
-          ).then((data) => data.json()),
-        ]).then((allResponses) => {
-          this.setState(
-            {
-              tv_info: allResponses[0],
-              tv_video_info: allResponses[1],
-            },
-            () => {
-              console.log(
-                "in handle tv after fetch, tv info: ",
-                this.state.tv_info
-              );
-              console.log(
-                "in handle tv after fetch, tv video info: ",
-                this.state.tv_video_info
-              );
-
-              // Handle runtime format
-              let runtime_min = -1;
-              if (this.state.tv_info.episode_run_time.length !== 0) {
-                runtime_min = this.state.tv_info.episode_run_time[0];
-                this.setState({ tv_total_runtime_min: runtime_min });
-              }
-              // console.log("episode run time: ", runtime_min);
-
-              let hour = Math.floor(runtime_min / 60);
-              let min = Math.floor(runtime_min % 60);
-
-              // Handle genres
-              let genres = [];
-
-              genres = this.state.tv_info.genres.map((g) => {
-                return g.name;
-              });
-
-              // console.log("tv genres: ", genres);
-
-              if (this.state.tv_video_info.results.length > 0) {
-                this.setState({
-                  tv_video_key: this.state.tv_video_info.results[0].key,
-                });
-              }
-
-              // Update state
-              this.setState({
-                tv_year: this.state.tv_info.first_air_date.split("-", 1),
-                tv_runtime_hr: hour,
-                tv_runtime_min: min,
-                tv_genres: genres,
-                // tv_video_key: this.state.tv_video_info.results[0].key,
-              });
-            }
-          );
-        });
-      }
-    );
-  };
-
-  componentDidMount() {
-    let category = this.props.location.state.category;
-    if (category === "movie") {
-      this.handleMovie();
-    } else if (category === "tv") {
-      this.handleTv();
-    }
   }
 
   openTab = (tabName) => {
@@ -190,11 +120,7 @@ class Detail extends React.Component {
         <div className="detail_poster_container">
           <div className="detail_poster_inner_container">
             <img
-              src={`https://image.tmdb.org/t/p/original/${
-                this.props.location.state.category === "movie"
-                  ? this.state.movie_info.poster_path
-                  : this.state.tv_info.poster_path
-              }`}
+              src={`https://image.tmdb.org/t/p/original/${this.state.info.poster_path}`}
               className="detail_poster"
             />
           </div>
@@ -202,17 +128,11 @@ class Detail extends React.Component {
         <div className="detail_main_container">
           <div className="detail_main_inner_container">
             <div className="detail_info">
-              <h2>
-                {this.props.location.state.category === "movie"
-                  ? this.state.movie_info.original_title
-                  : this.state.tv_info.original_name}
-              </h2>
+              <h2>{this.state.title}</h2>
               <div className="detail_sub_info">
-                {this.props.location.state.category === "movie"
-                  ? this.state.movie_year
-                  : this.state.tv_year}{" "}
-                &bull;
-                {this.props.location.state.category === "movie"
+                {this.state.year} &bull;
+                {this.state.runtime_hr} hr {this.state.runtime_min} min &bull;
+                {/* {this.props.location.state.category === "movie"
                   ? // Handle hour for MOVIE
                     this.state.movie_runtime_hr > 0
                     ? this.state.movie_runtime_hr
@@ -229,7 +149,7 @@ class Detail extends React.Component {
                   : // Handle hr postfix for TV
                   this.state.tv_total_runtime_min >= 60
                   ? "hr "
-                  : ""}
+                  : ""} */}
                 {/* {
                   // Hour number when movie
                   this.props.location.state.category === "movie" &&
@@ -275,7 +195,7 @@ class Detail extends React.Component {
                 &bull; {this.state.movie_genres.join(" / ")} &bull;{" "} */}
                 <button className="detail_button">
                   <a
-                    href={`https://www.imdb.com/title/${this.state.movie_info.imdb_id}`}
+                    href={`https://www.imdb.com/title/${this.state.info.imdb_id}`}
                     target="_blank"
                   >
                     IMDB
@@ -283,7 +203,7 @@ class Detail extends React.Component {
                 </button>
               </div>
               <div className="detail_overview">
-                <p>{this.state.movie_info.overview}</p>
+                <p>{this.state.info.overview}</p>
               </div>
               <div className="detail_grid_container">
                 {/* Two columns */}
@@ -314,22 +234,21 @@ class Detail extends React.Component {
                   <iframe
                     width="500"
                     height="300"
-                    src={`https://www.youtube.com/embed/${this.state.movie_video_key}`}
+                    src={`https://www.youtube.com/embed/${this.state.video_key}`}
                   ></iframe>
                 </div>
                 <div className="detail_grid_content" id="b2">
                   <div className="detail_company_container">
                     <h2>Companies...</h2>
                     <div className="detail_companies">
-                      {this.state.movie_info.production_companies &&
-                        this.state.movie_info.production_companies.map((c) => {
+                      {this.state.info.production_companies &&
+                        this.state.info.production_companies.map((c) => {
                           return (
                             <div className="detail_company" key={c.id}>
                               <div className="detail_logo_container">
                                 <img
                                   src={`https://image.tmdb.org/t/p/original/${c.logo_path}`}
                                   onError={this.addDefaultSrc}
-                                  // onError="this.onerror=null; this.src='https://dummyimage.com/600x400/000/ffffff.png&text=Image+Not+Found'"
                                   className="detail_logo"
                                 />
                               </div>
