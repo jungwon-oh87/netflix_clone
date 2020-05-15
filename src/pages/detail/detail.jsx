@@ -18,6 +18,7 @@ class Detail extends React.Component {
     genres: [],
     video_key: "",
     title: "",
+    countries: [],
   };
 
   componentDidMount() {
@@ -55,15 +56,26 @@ class Detail extends React.Component {
               let genres = [];
               let video_key = "";
 
+              // movie: info.production_countries[0].iso_3166_1
+              // tv: info.origin_country or production_companies[0].origin_country
+              let countries = [];
+
               // Set info according to category
               if (category === "movie") {
                 title = this.state.info.original_title;
                 year = this.state.info.release_date.split("-", 1);
                 total_runtime_min = this.state.info.runtime;
+                this.state.info.production_countries.forEach((c) =>
+                  countries.push(c.iso_3166_1)
+                );
+
+                // console.log("after push, movie countries: ", countries);
               } else {
                 title = this.state.info.original_name;
                 year = this.state.info.first_air_date.split("-", 1);
                 total_runtime_min = this.state.info.episode_run_time[0];
+                countries = this.state.info.origin_country;
+                // console.log("after push, tv country: ", countries);
               }
 
               // Set genres and video
@@ -87,6 +99,7 @@ class Detail extends React.Component {
                 genres: genres,
                 video_key: video_key,
                 title: title,
+                countries: countries,
               });
             }
           )
@@ -131,68 +144,10 @@ class Detail extends React.Component {
               <h2>{this.state.title}</h2>
               <div className="detail_sub_info">
                 {this.state.year} &bull;
-                {this.state.runtime_hr} hr {this.state.runtime_min} min &bull;
-                {/* {this.props.location.state.category === "movie"
-                  ? // Handle hour for MOVIE
-                    this.state.movie_runtime_hr > 0
-                    ? this.state.movie_runtime_hr
-                    : ""
-                  : // Handle hour for TV
-                  this.state.tv_total_runtime_min > 60
-                  ? this.state.tv_runtime_hr
-                  : ""}
-                {this.props.location.state.category === "movie"
-                  ? // Handle hr postfix for MOVIE
-                    this.state.movie_info.runtime >= 60
-                    ? "hr "
-                    : ""
-                  : // Handle hr postfix for TV
-                  this.state.tv_total_runtime_min >= 60
-                  ? "hr "
-                  : ""} */}
-                {/* {
-                  // Hour number when movie
-                  this.props.location.state.category === "movie" &&
-                  this.state.movie_runtime_hr > 0
-                    ? this.state.movie_runtime_hr
-                    : // 여기서부터 TV
-                    this.state.tv_total_runtime_min > 0
-                    ? this.state.tv_runtime_hr
-                    : "RUNTIME not available"
-                }
-                {
-                  // Hr postfix
-                  this.state.movie_runtime_hr > 0 ||
-                  this.state.tv_runtime_hr > 0
-                    ? "hr"
-                    : ""
-                }
-                {
-                  // Min number when movie
-                  this.props.location.state.category === "movie" &&
-                  this.state.movie_runtime_min > 0
-                    ? this.state.movie_runtime_min
-                    : ""
-                }
-                {
-                  // Min number when tv
-                  this.props.location.state.category === "tv" &&
-                  this.state.tv_runtime_min > 0
-                    ? this.state.tv_runtime_min
-                    : ""
-                }
-                {
-                  // Min postfix
-                  this.props.location.state.category === "movie" &&
-                  this.state.movie_runtime_min >= 0
-                    ? "mins "
-                    : ""
-                }
-                {this.props.location.state.category === "tv" &&
-                this.state.tv_runtime_min >= 0
-                  ? "mins "
-                  : ""}
-                &bull; {this.state.movie_genres.join(" / ")} &bull;{" "} */}
+                {this.state.runtime_hr !== 0 &&
+                  `${this.state.runtime_hr}hr`}{" "}
+                {this.state.runtime_min !== 0 && `${this.state.runtime_min}min`}
+                &bull;
                 <button className="detail_button">
                   <a
                     href={`https://www.imdb.com/title/${this.state.info.imdb_id}`}
@@ -230,7 +185,7 @@ class Detail extends React.Component {
                   </div>
                 </div>
                 <div className="detail_grid_content show" id="b1">
-                  <h2>Teaser videos...</h2>
+                  <h2>Teaser videos</h2>
                   <iframe
                     width="500"
                     height="300"
@@ -239,7 +194,7 @@ class Detail extends React.Component {
                 </div>
                 <div className="detail_grid_content" id="b2">
                   <div className="detail_company_container">
-                    <h2>Companies...</h2>
+                    <h2>Companies</h2>
                     <div className="detail_companies">
                       {this.state.info.production_companies &&
                         this.state.info.production_companies.map((c) => {
@@ -258,8 +213,18 @@ class Detail extends React.Component {
                         })}
                     </div>
                   </div>
-                  <div className="detail_country">
-                    <h2>Countries...</h2>
+                  <div className="detail_country_container">
+                    <h2>Countries</h2>
+                    <div className="detail_country_img_container">
+                      {this.state.countries.map((c) => {
+                        return (
+                          <img
+                            src={`https://www.countryflags.io/${c}/shiny/64.png`}
+                            alt={c}
+                          />
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               </div>

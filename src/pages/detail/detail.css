@@ -121,7 +121,7 @@ iframe {
   margin-top: 10px;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  /* justify-content: space-around; */
   width: 80%;
   overflow-x: auto;
   /* border: 1px solid red; */
@@ -136,6 +136,8 @@ iframe {
 
 .detail_company_name {
   text-align: center;
+  margin-top: 0;
+  height: 20px;
 }
 
 .detail_logo_container {
@@ -149,4 +151,13 @@ iframe {
   width: 80%;
   height: 80%;
   margin: 0 auto;
+}
+
+.detail_country_container {
+  margin-top: 15px;
+}
+
+.detail_country_img_container {
+  display: flex;
+  flex-wrap: wrap;
 }
