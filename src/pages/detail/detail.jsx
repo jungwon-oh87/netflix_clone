@@ -46,7 +46,7 @@ class Detail extends React.Component {
               video_info: allResponses[1],
             },
             () => {
-              console.log("after fetched, movie_info: ", this.state.info);
+              console.log("after fetched, info: ", this.state.info);
               console.log("after fetched, video_info: ", this.state.video_info);
 
               // Create title, year, runtime, genres
@@ -92,15 +92,21 @@ class Detail extends React.Component {
               let min = Math.floor(total_runtime_min % 60);
 
               // Update state
-              this.setState({
-                year: year,
-                runtime_hr: hour,
-                runtime_min: min,
-                genres: genres,
-                video_key: video_key,
-                title: title,
-                countries: countries,
-              });
+              this.setState(
+                {
+                  year: year,
+                  runtime_hr: hour,
+                  runtime_min: min,
+                  genres: genres,
+                  video_key: video_key,
+                  title: title,
+                  countries: countries,
+                },
+                () => {
+                  console.log("state check: ", this.state.runtime_hr);
+                  console.log("state check: ", this.state.runtime_min);
+                }
+              );
             }
           )
         );
@@ -147,15 +153,21 @@ class Detail extends React.Component {
                 {this.state.runtime_hr !== 0 &&
                   `${this.state.runtime_hr}hr`}{" "}
                 {this.state.runtime_min !== 0 && `${this.state.runtime_min}min`}
-                &bull;
-                <button className="detail_button">
-                  <a
-                    href={`https://www.imdb.com/title/${this.state.info.imdb_id}`}
-                    target="_blank"
-                  >
-                    IMDB
-                  </a>
-                </button>
+                {this.state.info.runtime !== 0 ? <span>&bull;</span> : ""}
+                {this.state.info.imdb_id ? (
+                  <span>
+                    <button className="detail_button">
+                      <a
+                        href={`https://www.imdb.com/title/${this.state.info.imdb_id}`}
+                        target="_blank"
+                      >
+                        IMDB
+                      </a>
+                    </button>
+                  </span>
+                ) : (
+                  ""
+                )}
               </div>
               <div className="detail_overview">
                 <p>{this.state.info.overview}</p>
@@ -221,6 +233,7 @@ class Detail extends React.Component {
                           <img
                             src={`https://www.countryflags.io/${c}/shiny/64.png`}
                             alt={c}
+                            key={c}
                           />
                         );
                       })}

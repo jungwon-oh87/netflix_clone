@@ -25,6 +25,11 @@ const Card = (props) => {
           <img
             className="poster"
             src={`https://image.tmdb.org/t/p/w200/${props.data.poster_path}`}
+            onError={(e) => {
+              e.target.onError = null;
+              e.target.src =
+                "https://dummyimage.com/125x200/000/ffffff.png&text=Image+Not+Found";
+            }}
           />
           <span className="rate">
             <span className="star-icon">&#9733;</span> {props.data.vote_average}
