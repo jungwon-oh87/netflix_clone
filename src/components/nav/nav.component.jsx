@@ -16,8 +16,15 @@ const Nav = () => {
   return (
     <header className="nav-list-container" onClick={handleClick}>
       <ul className="nav-ul">
+        <div className="nav-logo-container">
+          <img
+            src="https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png"
+            alt="logo"
+            className="nav-logo"
+          />
+        </div>
         <li>
-          <Link to="/netflix_clone/" className="nav-activated">
+          <Link to="/netflix_clone/" className="activated">
             Movies
           </Link>
         </li>

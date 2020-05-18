@@ -46,6 +46,21 @@ a {
   border-bottom: 3px solid transparent;
 }
 
-a.nav-activated {
+a.activated {
   border-bottom: 3px solid red;
+}
+
+.nav-logo-container {
+  width: 200px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+}
+
+.nav-logo {
+  width: 100%;
+  height: 50%;
+  margin: auto;
+  object-fit: contain;
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./card.styles.css";
+import pic from "../../images/defaultPoster.png";
 
 const Card = (props) => {
   let year;
@@ -25,10 +26,11 @@ const Card = (props) => {
           <img
             className="poster"
             src={`https://image.tmdb.org/t/p/w200/${props.data.poster_path}`}
+            alt="poster"
             onError={(e) => {
+              console.log("on Error: ", e.target);
               e.target.onError = null;
-              e.target.src =
-                "https://dummyimage.com/125x200/000/ffffff.png&text=Image+Not+Found";
+              e.target.src = pic;
             }}
           />
           <span className="rate">

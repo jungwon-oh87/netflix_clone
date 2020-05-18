@@ -83,8 +83,10 @@ class Detail extends React.Component {
 
               if (this.state.video_info.results.length > 0) {
                 video_key = this.state.video_info.results[0].key;
+                console.log("video key: ", video_key);
               } else {
                 video_key = "";
+                console.log("video not available");
               }
 
               // Handle runtime format
@@ -153,7 +155,11 @@ class Detail extends React.Component {
                 {this.state.runtime_hr !== 0 &&
                   `${this.state.runtime_hr}hr`}{" "}
                 {this.state.runtime_min !== 0 && `${this.state.runtime_min}min`}
-                {this.state.info.runtime !== 0 ? <span>&bull;</span> : ""}
+                {this.state.info.runtime !== 0 && this.state.info.imdb_id ? (
+                  <span>&bull;</span>
+                ) : (
+                  ""
+                )}
                 {this.state.info.imdb_id ? (
                   <span>
                     <button className="detail_button">
