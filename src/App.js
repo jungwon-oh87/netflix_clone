@@ -4,6 +4,7 @@ import "./App.css";
 import MoviesPage from "./pages/movies/moviesPage";
 import DetailPage from "./pages/detail/detail";
 import TvPage from "./pages/tv/tvPage";
+import SearchPage from "./pages/search/searchPage";
 import Nav from "./components/nav/nav.component";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -66,10 +67,6 @@ class App extends Component {
     return <h1 className="temp-text">Search Page coming soon...</h1>;
   }
 
-  // showDetail() {
-  //   return <DetailPage />;
-  // }
-
   showNotFound() {
     console.log("not found called");
     return <h1 className="temp-text">404 Page</h1>;
@@ -87,11 +84,11 @@ class App extends Component {
               component={this.showMoviePage}
               exact={true}
             />
-            <Route path="/netflix_clone/tv" component={this.showTvPage} />
             <Route
-              path="/netflix_clone/search"
-              component={this.showSearchPage}
+              path="/netflix_clone/tv"
+              component={() => <TvPage data={this.state} />}
             />
+            <Route path="/netflix_clone/search" component={SearchPage} />
             <Route path="/detail" component={DetailPage} />
             <Route component={this.showNotFound} />
           </Switch>

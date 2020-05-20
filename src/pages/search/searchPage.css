@@ -1,0 +1,22 @@
+.search-container {
+  text-align: left;
+  width: 80%;
+  margin-top: 70px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid red;
+}
+
+.search-input-container {
+  border: 1px solid blue;
+  width: 100%;
+  overflow: hidden;
+  /* margin: auto; */
+  /* padding: 0; */
+}
+
+.search-input {
+  width: 100%;
+  font-size: 20px;
+  padding: 4px;
+}
