@@ -6,10 +6,12 @@ import "./nav.style.css";
 const handleClick = (e) => {
   const elems = document.querySelector(".activated");
 
+  console.log("elems: ", e.target);
   // Remove classname from the activated element
   if (elems !== null) {
     elems.classList.remove("activated");
   }
+
   e.target.classList.add("activated");
 };
 const Nav = () => {

@@ -21,6 +21,7 @@
   width: 30%;
   border-width: 0;
   margin: 0;
+  border: 1px solid blue;
 }
 
 .nav-ul li {
@@ -56,6 +57,7 @@ a.activated {
   display: flex;
   align-items: center;
   margin-right: 1rem;
+  pointer-events: none;
 }
 
 .nav-logo {
