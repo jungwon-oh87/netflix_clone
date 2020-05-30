@@ -9,7 +9,8 @@ class searchPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      movie_id_list: [],
+      movie_list: [],
+      tv_list: [],
     };
 
     // this.handleSearch = this.handleSearch.bind(this);
@@ -18,21 +19,25 @@ class searchPage extends Component {
   handleSearch = (e) => {
     if (e.which == 13 || e.keyCode == 13) {
       const search_input = e.target.value;
-      fetch(
-        `https://api.themoviedb.org/3/search/keyword?api_key=${API_KEY}&query=${search_input}&page=1`
-      )
-        .then((data) => data.json())
-        .then((res) => {
-          console.log("this: ", this);
-          this.setState(
-            {
-              movie_id_list: res.results,
-            },
-            () => {
-              console.log("movie id list: ", this.state.movie_id_list);
-            }
-          );
-        });
+      Promise.all([
+        fetch(
+          `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${search_input}&language=en-US&include_adult=false`
+        ).then((data) => data.json()),
+        fetch(
+          `https://api.themoviedb.org/3/search/tv?api_key=${API_KEY}&query=${search_input}&language=en-US&include_adult=false`
+        ).then((data) => data.json()),
+      ]).then((allResponses) => {
+        this.setState(
+          {
+            movie_list: allResponses[0].results,
+            tv_list: allResponses[1].results,
+          },
+          () => {
+            console.log("movie list in the state: ", this.state.movie_list);
+            console.log("tv list in the state: ", this.state.tv_list);
+          }
+        );
+      });
     }
   };
 
@@ -43,12 +48,26 @@ class searchPage extends Component {
           <input
             type="text"
             className="search-input"
-            placeholder="Enter search item"
+            placeholder="Type an item and press enter."
             onKeyPress={this.handleSearch}
+            autoFocus
           />
         </div>
         <div className="search-movie-container">
-          {/* <Section title="Movie Results" category="movie" /> */}
+          {this.state.movie_list.length > 0 && (
+            <Section
+              title="Movie Results"
+              category="movie"
+              data={this.state.movie_list}
+            />
+          )}
+          {this.state.tv_list.length > 0 && (
+            <Section
+              title="TV Show Results"
+              category="tv"
+              data={this.state.tv_list}
+            />
+          )}
         </div>
       </div>
     );

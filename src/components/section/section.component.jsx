@@ -3,12 +3,12 @@ import List from "../list/list.component";
 
 import "./section.styles.css";
 
-const Section = (props) => {
+const Section = ({ title, ...otherProps }) => {
   return (
     <div className="section-container">
-      <h2>{props.title}</h2>
+      <h2>{title}</h2>
       <div className="section-content">
-        <List data={props.data} category={props.category} />
+        <List {...otherProps} />
       </div>
     </div>
   );
