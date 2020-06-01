@@ -65,3 +65,24 @@ a.activated {
   margin: auto;
   object-fit: contain;
 }
+
+.nav-ul-mobile {
+  display: none;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  height: 100%;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+  .nav-ul {
+    display: none;
+  }
+
+  .nav-ul-mobile {
+    display: flex;
+  }
+}

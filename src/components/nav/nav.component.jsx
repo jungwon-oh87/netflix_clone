@@ -37,6 +37,26 @@ const Nav = () => {
           <Link to="/netflix_clone/search">Search</Link>
         </li>
       </ul>
+      <ul className="nav-ul-mobile">
+        <div className="nav-logo-container-mobile">
+          <img
+            src="../../images/netflix-icon.png"
+            alt="logo"
+            className="nav-logo-mobile"
+          />
+        </div>
+        <li>
+          <Link to="/netflix_clone/" className="activated">
+            Movies22
+          </Link>
+        </li>
+        <li>
+          <Link to="/netflix_clone/tv">TV22</Link>
+        </li>
+        <li>
+          <Link to="/netflix_clone/search">Search22</Link>
+        </li>
+      </ul>
     </header>
   );
 };

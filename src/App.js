@@ -6,7 +6,7 @@ import DetailPage from "./pages/detail/detail";
 import TvPage from "./pages/tv/tvPage";
 import SearchPage from "./pages/search/searchPage";
 import Nav from "./components/nav/nav.component";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
@@ -72,12 +72,14 @@ class App extends Component {
     return <h1 className="temp-text">404 Page</h1>;
   }
 
+  handleHamburger = () => {
+    console.log("hamburger clicked");
+  };
   render() {
-    // const { now_playing_movies, upcoming_movies, popular_movies } = this.state;
     return (
-      <div className="App">
+      <div>
         <Router>
-          <Nav></Nav>
+          <Nav className="app-nav"></Nav>
           <Switch>
             <Route
               path="/netflix_clone/"
