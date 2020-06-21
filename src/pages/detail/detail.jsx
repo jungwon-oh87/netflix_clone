@@ -23,7 +23,7 @@ class Detail extends React.Component {
 
   componentDidMount() {
     let category = this.props.location.state.category;
-    console.log("movie data: ", this.props.location.state.data);
+    console.log("movie data in detail: ", this.props.location.state.data);
     // console.log(this.props.location.state.category);
     this.setState(
       {
@@ -94,21 +94,15 @@ class Detail extends React.Component {
               let min = Math.floor(total_runtime_min % 60);
 
               // Update state
-              this.setState(
-                {
-                  year: year,
-                  runtime_hr: hour,
-                  runtime_min: min,
-                  genres: genres,
-                  video_key: video_key,
-                  title: title,
-                  countries: countries,
-                },
-                () => {
-                  console.log("state check: ", this.state.runtime_hr);
-                  console.log("state check: ", this.state.runtime_min);
-                }
-              );
+              this.setState({
+                year: year,
+                runtime_hr: hour,
+                runtime_min: min,
+                genres: genres,
+                video_key: video_key,
+                title: title,
+                countries: countries,
+              });
             }
           )
         );
@@ -203,12 +197,22 @@ class Detail extends React.Component {
                   </div>
                 </div>
                 <div className="detail_grid_content show" id="b1">
-                  <h2>Teaser videos</h2>
-                  <iframe
-                    width="500"
-                    height="300"
-                    src={`https://www.youtube.com/embed/${this.state.video_key}`}
-                  ></iframe>
+                  {this.state.video_info.results == null ||
+                  this.state.video_info.results.length === 0 ? (
+                    <h4>
+                      We're sorry. There is no available videos for this
+                      product.
+                    </h4>
+                  ) : (
+                    <div>
+                      <h2>Teaser videos</h2>
+                      <iframe
+                        width="500"
+                        height="300"
+                        src={`https://www.youtube.com/embed/${this.state.video_key}`}
+                      ></iframe>
+                    </div>
+                  )}
                 </div>
                 <div className="detail_grid_content" id="b2">
                   <div className="detail_company_container">
